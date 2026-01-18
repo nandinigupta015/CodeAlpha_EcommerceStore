@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Order Success - Modern Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">🎉 Order Placed Successfully!</h1>
+
+    <div style="max-width:500px; background:white; padding:24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <p style="font-size:1.1rem;"><b>Order ID:</b> {{ order.id }}</p>
+        <p style="font-size:1.1rem;"><b>Total Paid:</b> ₹{{ order.total_amount }}</p>
+
+        <a href="{% url 'product_list' %}">
+            <button class="btn btn-primary" style="margin-top:15px;">
+                Back to Home 🏠
+            </button>
+        </a>
+    </div>
+</div>
+{% endblock %}

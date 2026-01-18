@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}My Orders - Modern Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">📦 My Orders</h1>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px;">
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <div>
+                        <h3 style="margin-bottom:5px;">Order #{{ order.id }}</h3>
+                        <p style="margin:0; color:#555;">Placed on: {{ order.created_at }}</p>
+                    </div>
+
+                    <div style="text-align:right;">
+                        <h3 style="color:#27ae60; margin:0;">₹{{ order.total_amount|floatformat:2 }}</h3>
+                        <p style="margin:0; color:#777;">Total Paid</p>
+                    </div>
+                </div>
+
+                <hr style="border:none; border-top:1px solid #eee; margin:10px 0 15px 0;">
+
+                <h4 style="margin-bottom:10px;">Items:</h4>
+
+                {% for item in order.items.all %}
+                    <div style="padding:10px; border:1px solid #eee; border-radius:10px; margin-bottom:10px;">
+                        <p style="margin:0; font-weight:600;">{{ item.product.name }}</p>
+                        <p style="margin:4px 0 0 0; color:#555;">
+                            Price: ₹{{ item.price|floatformat:2 }} |
+                            Qty: {{ item.quantity }}
+                        </p>
+                    </div>
+                {% empty %}
+                    <p style="color:#7f8c8d;">No items found in this order.</p>
+                {% endfor %}
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="color:#7f8c8d;">You have not placed any orders yet 😢</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">👤 My Profile</h1>
+
+    <div style="max-width:500px; background:white; padding:24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <p style="font-size:1.1rem;"><b>Username:</b> {{ user.username }}</p>
+        <p style="font-size:1.1rem;"><b>Email:</b> {{ user.email|default:"Not added" }}</p>
+
+        <br>
+
+        <a href="{% url 'my_orders' %}">
+            <button class="btn btn-primary">📦 My Orders</button>
+        </a>
+    </div>
+</div>
+{% endblock %}

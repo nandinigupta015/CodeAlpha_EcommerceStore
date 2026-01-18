@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Checkout - Modern Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">✅ Checkout</h1>
+
+    <div style="max-width:500px; background:white; padding:24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <h2 style="margin-bottom:15px;">Total Amount: ₹{{ total }}</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-success" type="submit">Place Order ✅</button>
+        </form>
+
+        <br>
+        <a href="{% url 'cart' %}" style="text-decoration:none; color:#3498db;">⬅ Back to Cart</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} - Modern Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div style="
+        background:white;
+        border-radius:16px;
+        padding:30px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.08);
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap:30px;
+        align-items:center;
+    ">
+
+        <!-- LEFT: Product Image -->
+<div style="width:100%; height:380px; border-radius:12px; overflow:hidden;">
+    {% if product.image %}
+        <img src="{{ product.image.url }}" style="width:100%; height:100%; object-fit:cover;">
+    {% else %}
+        <div style="
+            width:100%;
+            height:380px;
+            border-radius:12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:5rem;
+            color:white;
+        ">
+            🛍️
+        </div>
+    {% endif %}
+</div>
+
+
+        <!-- RIGHT: Product Info -->
+        <div>
+            <h1 style="font-size:2rem; margin-bottom:12px; color:#2c3e50;">
+                {{ product.name }}
+            </h1>
+
+            <h2 style="font-size:2rem; color:#27ae60; margin-bottom:15px;">
+                ₹{{ product.price }}
+            </h2>
+
+            <p style="color:#7f8c8d; line-height:1.6; margin-bottom:25px;">
+                {{ product.description }}
+            </p>
+
+            <a href="{% url 'add_to_cart' product.id %}">
+                <button class="btn btn-success" style="max-width:260px;">
+                    Add to Bag 👜
+                </button>
+            </a>
+
+            <br><br>
+
+            <a href="{% url 'product_list' %}" style="text-decoration:none; color:#3498db;">
+                ⬅ Back to Products
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ✅ small responsive fix -->
+<style>
+@media (max-width: 768px) {
+    .container > div {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}Shop - Ethereal Wardrobe{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1 class="page-title">Featured Products</h1>
+
+    <!-- ✅ FILTER BAR: Search + Category + Sort -->
+    <form method="get"
+          style="
+            margin-bottom:25px;
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+            align-items:center;
+            background:white;
+            padding:14px;
+            border-radius:16px;
+            box-shadow:0 10px 24px rgba(0,0,0,0.06);
+          ">
+
+        <!-- ✅ Search -->
+        <input type="text"
+               name="q"
+               value="{{ search_query }}"
+               placeholder="Search outfits..."
+               style="max-width:260px;">
+
+        <!-- ✅ Category -->
+        <select name="category">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}"
+                    {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- ✅ Sort -->
+        <select name="sort">
+            <option value="">Sort By</option>
+            <option value="new" {% if sort_option == "new" %}selected{% endif %}>Newest</option>
+            <option value="low" {% if sort_option == "low" %}selected{% endif %}>Price: Low to High</option>
+            <option value="high" {% if sort_option == "high" %}selected{% endif %}>Price: High to Low</option>
+        </select>
+
+        <!-- ✅ Apply -->
+        <button type="submit" class="btn btn-primary" style="max-width:160px;">
+            Apply ✅
+        </button>
+
+        <!-- ✅ Clear Filters (small real-life feature) -->
+        <a href="{% url 'product_list' %}" style="text-decoration:none;">
+            <button type="button" class="btn btn-success" style="max-width:160px;">
+                Clear ✨
+            </button>
+        </a>
+
+    </form>
+
+    <!-- ✅ PRODUCTS GRID -->
+    <div class="products-grid">
+        {% for product in products %}
+            <div class="product-card">
+
+                <!-- ✅ New Arrival Badge -->
+                {% if product.is_new %}
+<div style="
+    position:absolute;
+    top:14px;
+    left:14px;
+    background:rgba(255,255,255,0.92);
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:0.85rem;
+    font-weight:700;
+    letter-spacing:0.2px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.10);
+">
+    ✨ New Arrival
+</div>
+{% endif %}
+
+
+                <!-- ✅ Product Image -->
+                <div class="product-image">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        🛍️
+                    {% endif %}
+                </div>
+
+                <!-- ✅ Product Info -->
+                <div class="product-info">
+                    <div class="product-name">{{ product.name }}</div>
+
+                    {% if product.category %}
+                        <p style="color:#8a8a8a; margin:0 0 10px 0; font-weight:600;">
+                            {{ product.category.name }}
+                        </p>
+                    {% endif %}
+
+                    <div class="product-price">₹{{ product.price|floatformat:2 }}</div>
+
+                    <a href="{% url 'product_detail' product.id %}">
+                        <button class="btn btn-primary">View Details</button>
+                    </a>
+
+                    <br><br>
+
+                    <a href="{% url 'add_to_cart' product.id %}">
+                        <button class="btn btn-success">Add to Bag 👜</button>
+                    </a>
+                </div>
+
+            </div>
+        {% empty %}
+            <p style="color:#7f8c8d;">No products available.</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

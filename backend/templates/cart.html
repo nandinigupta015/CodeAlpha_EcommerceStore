@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Cart - Modern Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">🛒 Your Cart</h1>
+
+    {% if cart_items %}
+        <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
+            {% for item in cart_items %}
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:flex-start;
+                    padding:15px 0;
+                    border-bottom:1px solid #eee;
+                ">
+
+                    <!-- LEFT SIDE -->
+                    <div style="flex:1;">
+                        <h3 style="margin-bottom:6px;">{{ item.product.name }}</h3>
+
+                        <p style="color:#555; margin:0;">
+                            Price: ₹{{ item.product.price|floatformat:2 }}
+                        </p>
+
+                        <!-- ✅ Quantity Controls -->
+                        <div style="display:flex; gap:10px; align-items:center; margin-top:10px;">
+                            <b>Qty:</b>
+
+                            <a href="{% url 'decrease_quantity' item.id %}"
+                               style="text-decoration:none; padding:4px 10px; border:1px solid #ccc; border-radius:6px;">
+                                -
+                            </a>
+
+                            <span style="min-width:20px; text-align:center;">{{ item.quantity }}</span>
+
+                            <a href="{% url 'increase_quantity' item.id %}"
+                               style="text-decoration:none; padding:4px 10px; border:1px solid #ccc; border-radius:6px;">
+                                +
+                            </a>
+                        </div>
+
+                        <!-- ✅ Subtotal -->
+                        <p style="margin-top:10px; font-weight:700; color:#2c3e50;">
+                            Subtotal: ₹{{ item.subtotal|floatformat:2 }}
+                        </p>
+                    </div>
+
+                    <!-- RIGHT SIDE -->
+                    <div style="text-align:right;">
+                        <a href="{% url 'remove_from_cart' item.id %}"
+                           style="color:#e74c3c; text-decoration:none; font-weight:600;">
+                            ❌ Remove
+                        </a>
+                    </div>
+
+                </div>
+            {% endfor %}
+
+            <!-- ✅ TOTAL -->
+            <div style="text-align:right; padding-top:18px;">
+                <h2 style="color:#2c3e50;">Total: ₹{{ total|floatformat:2 }}</h2>
+
+                <a href="{% url 'checkout' %}">
+                    <button class="btn btn-success" style="max-width:250px; margin-top:10px;">
+                        Proceed to Checkout ✅
+                    </button>
+                </a>
+            </div>
+
+        </div>
+
+    {% else %}
+        <div style="text-align:center; padding:50px; color:#7f8c8d;">
+            <h2>Your cart is empty 😢</h2>
+            <p>Go back and add some products!</p>
+
+            <a href="{% url 'product_list' %}">
+                <button class="btn btn-primary" style="max-width:250px; margin-top:15px;">
+                    Continue Shopping 🛍️
+                </button>
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
