@@ -13,6 +13,7 @@ urlpatterns = [
     path("decrease/<int:pk>/", views.decrease_quantity, name="decrease_quantity"),
     path("my-orders/", views.my_orders, name="my_orders"),
     path("profile/", views.profile, name="profile"),
+    path("create-admin/", views.create_admin, name="create_admin"),
 
 
 ]
